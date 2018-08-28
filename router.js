@@ -28,21 +28,20 @@ function treeHouseSkills(req, res){
         // get json from Treehouse
         const myCourses = new MyCourses('pasqualeconte', info);
         myCourses.on('end', data => {
-            console.dir(data);
+            // on "end" show corrispondences
+            res.write(`Courses related to ${info}:\n`);
             for (let badge in data){
-                res.write(data[badge] + "\n");
+                res.write(`${data[badge]}\n`);
                 for (let course in data[badge]){
-                    res.write("--- " + data[badge][course] + "\n");
+                    res.write(`- ${data[badge][course]}\n`);
                 }
             }
             res.end('Footer\n');
         });
-        //console.dir(myCourses.result);
-        //res.write(info + '\n');
-        //res.end('Footer\n');
-    
-    //  + on "end" show corrispondences
-    //  + on "error" show error
+        myCourses.on('error', error => {
+            res.write(error.message + '\n');
+            res.end('Footer\n');
+        });
     }    
 }
 
