@@ -26,6 +26,4 @@ server.listen(port, hostname, () => {
 
 
 
-// function that handle the reading of files and marge in values
-//  + read from file and get a string
-//  + marges values into string
+

@@ -1,19 +1,33 @@
 const MyCourses = require('./MyCourses');
+const ren = require('./renderer');
+const querystring = require('querystring');
 
+const commonHeades = {'content-type': 'text/html'};
 
 // handle HTTP route / with GET and POST
 function home(req, res){   
-//  + if (url == to "/" and GET)
     if(req.url === '/'){
-    //  + show serch
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/plain');
-        res.write('Header\n');
-        res.write('Search\n');
-        res.end('Footer\n');
+        // if (url == to "/" and GET)
+        if(req.method.toLowerCase() === 'get'){
+            // show serch
+            res.writeHead(200, commonHeades);
+            ren.view('header', {}, res);
+            ren.view('search', {}, res);
+            ren.view('footer', {}, res);
+            res.end();
+        }else if (req.method.toLowerCase() === 'post'){
+            // if (url == "/" and POST)
+            // get POST data from the body
+            req.on('data', postBody =>{
+                console.log(postBody.toString());
+                // extract skillName to search
+                var query = querystring.parse(postBody.toString());
+                res.writeHead(303, {'location':`/${query.skillname}`});
+                // redirect to /<nameInfoToSearch>
+                res.end();
+            });
+        }
     }
-    //  + if (url == "/" and POST)
-    //    + redirect to /<nameInfoToSearch>
 }
 
 
@@ -22,25 +36,28 @@ function treeHouseSkills(req, res){
     const info = req.url.replace('/', '');
 //  if (url == "/...")
     if(info.length > 0){
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/plain');
-        res.write('Header\n');
+        res.writeHead(200, commonHeades);
+        ren.view('header', {}, res);
         // get json from Treehouse
         const myCourses = new MyCourses('pasqualeconte', info);
         myCourses.on('end', data => {
             // on "end" show corrispondences
-            res.write(`Courses related to ${info}:\n`);
+            ulContent = '';
             for (let badge in data){
-                res.write(`${data[badge]}\n`);
-                for (let course in data[badge]){
-                    res.write(`- ${data[badge][course]}\n`);
-                }
+                ulContent += `<li>${data[badge]}</li>\n`;
+                // for (let course in data[badge]){
+                //     ulContent += `<li>- ${data[badge][course]}</li>\n`;
+                // }
             }
-            res.end('Footer\n');
+            ren.view('profile', {'ul':ulContent, 'skill': info}, res);
+            ren.view('footer', {}, res);
+            res.end();
         });
         myCourses.on('error', error => {
-            res.write(error.message + '\n');
-            res.end('Footer\n');
+            ren.view('search', {}, res);
+            ren.view('error', {errorMessage: error.message}, res);
+            ren.view('footer', {}, res);
+            res.end();
         });
     }    
 }
