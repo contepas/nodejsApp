@@ -1,6 +1,6 @@
 # API-Node
 
-This application open a connection to the [TreeHouse](https://teamtreehouse.com/pasqualeconte.json) API and let you search trougth my badges.
+This application opens a connection to the [TreeHouse](https://teamtreehouse.com/pasqualeconte.json) API and lets you search through my badges.
 
 ## Getting Started
 
