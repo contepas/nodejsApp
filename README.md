@@ -1,7 +1,19 @@
-## Something to talk about
+# API-Node
 
-This repo will host my dynamic resume!
+This application open a connection to the [TreeHouse](https://teamtreehouse.com/pasqualeconte.json) API and let you search trougth my badges.
 
-Checkout my linkedin profile [here](https://www.linkedin.com/in/pasqualeconte/), and [there](https://teamtreehouse.com/pasqualeconte) is my Treehouse profile!
+## Getting Started
 
-![logo](https://user-images.githubusercontent.com/28729620/44577914-8f893d80-a792-11e8-89fd-8711c7aea326.jpg)
+This application is build just on Node.js, without the help of any framework
+
+## Author
+
+* **Pasquale Conte** - *Back-End Developer* - [github](https://github.com/contepas)
+
+Checkout my [linkedin](https://www.linkedin.com/in/pasqualeconte/) profile, and is my [Treehouse](https://teamtreehouse.com/pasqualeconte) profile!
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+
